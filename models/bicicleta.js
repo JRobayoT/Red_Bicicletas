@@ -1,3 +1,4 @@
+//Constructor para las bicicletas
 var Bicicleta = function(id, color, modelo, ubicacion){
     this.id = id,
     this.color = color,
@@ -5,9 +6,11 @@ var Bicicleta = function(id, color, modelo, ubicacion){
     this.ubicacion = ubicacion
 }
 
+//Prototipos
 Bicicleta.prototype.toString = function () {
     return 'id: ' + this.id + "| color: " + this.color;
 }
+
 //array para bicicletas
 Bicicleta.allBicis = [];
 
@@ -15,6 +18,7 @@ Bicicleta.allBicis = [];
 Bicicleta.add = (aBici) =>{
     Bicicleta.allBicis.push(aBici);
 }
+
 //Funcion para buscar una bicicleta por ID
 Bicicleta.findById = (aBiciID) =>{
     var aBici = Bicicleta.allBicis.find(x => x.id == aBiciID);
@@ -36,9 +40,11 @@ Bicicleta.removeById = (aBiciID) =>{
     }
 }
 
+//Datos de prueba para bicicleta
 var a = new Bicicleta(1,'azul','mtb', [4.582385205659256, -74.15670604077965]);
 var b = new Bicicleta(2,'blanca','mtb', [4.583575194806388, -74.15610752121424]);
 
+//Añade los datos de prueba
 Bicicleta.add(a);
 Bicicleta.add(b);
 
