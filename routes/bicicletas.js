@@ -1,3 +1,8 @@
+/**
+ * Faihd Enrique Pineda Duque
+ * Juan David Robayo Torres
+ */
+
 var express = require('express');
 var router = express.Router();
 var bicicletaControlller = require('../controllers/bicicleta.js');

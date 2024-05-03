@@ -1,3 +1,8 @@
+/**
+ * Faihd Enrique Pineda Duque
+ * Juan David Robayo Torres
+ */
+
 //Constructor para las bicicletas
 var Bicicleta = function(id, color, modelo, ubicacion){
     this.id = id,
