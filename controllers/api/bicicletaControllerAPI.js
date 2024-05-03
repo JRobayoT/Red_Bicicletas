@@ -1,3 +1,8 @@
+/**
+ * Faihd Enrique Pineda Duque
+ * Juan David Robayo Torres
+ */
+
 var Bicicleta = require('../../models/bicicleta')
 
 // Controlador para obtener la lista de todas las bicicletas

@@ -1,3 +1,8 @@
+/**
+ * Faihd Enrique Pineda Duque
+ * Juan David Robayo Torres
+ */
+
 var map = L.map('main_map').setView([4.579700870810789, -74.15751070350747], 13);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
