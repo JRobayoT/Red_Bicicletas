@@ -68,7 +68,9 @@ exports.bicicleta_update_post = (req, res) => {
 // Controlador para manejar la eliminación de una bicicleta específica (POST)
 //Elimina la bicicleta con el ID especificado en el cuerpo de la solicitud
 exports.bicicleta_delete_post = (req, res) => {
-    Bicicleta.removeById(req.body.id);
+    var bici = Bicicleta.findById(req.params.id)
+    console.log(bici.id)
+    Bicicleta.removeById(parseInt(bici.id));
 
     res.redirect('/bicicletas');
 }

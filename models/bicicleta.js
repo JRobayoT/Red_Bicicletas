@@ -34,16 +34,18 @@ Bicicleta.findById = (aBiciID) =>{
     }
 }
 
-//Funcion para quitar bicicletas
-Bicicleta.removeById = (aBiciID) =>{
-    //Bicicleta.findById(aBiciID);
+// Función para eliminar bicicletas por ID
+Bicicleta.removeById = (aBiciID) => {
+    // Búsqueda de la bicicleta por su ID
     for (let i = 0; i < Bicicleta.allBicis.length; i++) {
-        if(Bicicleta.allBicis[i].id == aBiciID){
+        if (Bicicleta.allBicis[i].id == aBiciID) {
+            // Eliminación de la bicicleta encontrada
             Bicicleta.allBicis.splice(i, 1);
-            break
+            break;
         }
     }
 }
+
 
 //Datos de prueba para bicicleta
 var a = new Bicicleta(1,'azul','mtb', [4.582385205659256, -74.15670604077965]);
