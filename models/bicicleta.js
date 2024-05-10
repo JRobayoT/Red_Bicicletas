@@ -3,56 +3,50 @@
  * Juan David Robayo Torres
  */
 
-//Constructor para las bicicletas
-var Bicicleta = function(id, color, modelo, ubicacion){
-    this.id = id,
-    this.color = color,
-    this.modelo = modelo,
-    this.ubicacion = ubicacion
-}
+var moongose = require('mongoose');
+var Schema = moongose.Schema;
 
-//Prototipos
-Bicicleta.prototype.toString = function () {
-    return 'id: ' + this.id + "| color: " + this.color;
-}
-
-//array para bicicletas
-Bicicleta.allBicis = [];
-
-//Funcion para agregar bicicletas
-Bicicleta.add = (aBici) =>{
-    Bicicleta.allBicis.push(aBici);
-}
-
-//Funcion para buscar una bicicleta por ID
-Bicicleta.findById = (aBiciID) =>{
-    var aBici = Bicicleta.allBicis.find(x => x.id == aBiciID);
-    if (aBici) {
-        return aBici;
-    } else {
-        throw new Error(`No existe una bicicleta con el Id ${aBiciID}`)
+var bicicletaSchema = Schema({
+    code: Number,
+    color: String,
+    modelo: String,
+    ubicacion: {
+        type: [Number], index: {type: '2dsphere', sparse: true}
     }
-}
+});
 
-// Función para eliminar bicicletas por ID
-Bicicleta.removeById = (aBiciID) => {
-    // Búsqueda de la bicicleta por su ID
-    for (let i = 0; i < Bicicleta.allBicis.length; i++) {
-        if (Bicicleta.allBicis[i].id == aBiciID) {
-            // Eliminación de la bicicleta encontrada
-            Bicicleta.allBicis.splice(i, 1);
-            break;
-        }
-    }
-}
+//Nos devuelve una nueva instancia de mongo para despues operar sobre estos
+bicicletaSchema.statics.createInstance = (code, color, modelo, ubicacion) =>{
+    return new this({
+        code: code,
+        color: color,
+        modelo: modelo,
+        ubicacion: ubicacion
+    });
+};
 
 
-//Datos de prueba para bicicleta
-var a = new Bicicleta(1,'azul','mtb', [4.582385205659256, -74.15670604077965]);
-var b = new Bicicleta(2,'blanca','mtb', [4.583575194806388, -74.15610752121424]);
+bicicletaSchema.methods.toString = () => {
+    return 'code ' + this.code + 'color: ' + this.color;
+};
 
-//Añade los datos de prueba
-Bicicleta.add(a);
-Bicicleta.add(b);
+//Se agrega directo al modelo con el callBack
+bicicletaSchema.statics.allBicis = (cb) => {
+    return this.find({}, cb);
+};
 
-module.exports = Bicicleta;
+bicicletaSchema.statics.add = (aBici, cb) => {
+    this.create(aBici, cb);
+};
+
+bicicletaSchema.statics.findByCode = (aCode, cb) => {
+    return this.findOne({code: aCode}, cb);
+};
+
+bicicletaSchema.statics.removeByCode = (aCode, cb) => {
+    return this.deleteOne({code: aCode}, cb)
+};
+
+
+//Exportamos nombre y el esquema -> Schema
+module.exports = moongose.model('Bicicleta', bicicletaSchema);
