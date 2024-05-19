@@ -19,7 +19,7 @@ var app = express();
 
 var moongose = require('mongoose');
 var mongoDB = 'mongodb://localhost/red_bicicletas';
-moongose.connect(mongoDB, {useNewURLParser: true});
+moongose.connect(mongoDB);
 moongose.Promise = global.Promise;
 var db = moongose.connection;
 db.on('error',console.error.bind(console,'MongoDB connection error: '));
@@ -54,6 +54,11 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+var port = process.env.PORT || 3001; // Puerto predeterminado 3000 o el proporcionado por el entorno
+app.listen(port, function () {
+  console.log('La aplicación está corriendo en el puerto ' + port);
 });
 
 module.exports = app;

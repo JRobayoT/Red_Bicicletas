@@ -3,10 +3,10 @@
  * Juan David Robayo Torres
  */
 
-var moongose = require('mongoose');
-var Schema = moongose.Schema;
+const moongose = require('mongoose');
+const Schema = moongose.Schema;
 
-var bicicletaSchema = Schema({
+var bicicletaSchema = new Schema({
     code: Number,
     color: String,
     modelo: String,
@@ -16,7 +16,7 @@ var bicicletaSchema = Schema({
 });
 
 //Nos devuelve una nueva instancia de mongo para despues operar sobre estos
-bicicletaSchema.statics.createInstance = (code, color, modelo, ubicacion) =>{
+bicicletaSchema.statics.createInstance = function(code, color, modelo, ubicacion){
     return new this({
         code: code,
         color: color,
@@ -26,25 +26,52 @@ bicicletaSchema.statics.createInstance = (code, color, modelo, ubicacion) =>{
 };
 
 
-bicicletaSchema.methods.toString = () => {
+bicicletaSchema.methods.toString = function(){
     return 'code ' + this.code + 'color: ' + this.color;
 };
 
-//Se agrega directo al modelo con el callBack
-bicicletaSchema.statics.allBicis = (cb) => {
+bicicletaSchema.statics.allBicis = function(cb){
     return this.find({}, cb);
 };
 
-bicicletaSchema.statics.add = (aBici, cb) => {
-    this.create(aBici, cb);
+bicicletaSchema.statics.add = function(aBici){
+    return this.create(aBici);
 };
 
-bicicletaSchema.statics.findByCode = (aCode, cb) => {
-    return this.findOne({code: aCode}, cb);
+bicicletaSchema.statics.findById = async function(id) {
+    try {
+        const bicicleta = await this.findOne({ _id: id });
+        if (!bicicleta) {
+            return { success: false, message: 'Bicicleta no encontrada' };
+        }
+        return { success: true, data: bicicleta };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
 };
 
-bicicletaSchema.statics.removeByCode = (aCode, cb) => {
-    return this.deleteOne({code: aCode}, cb)
+bicicletaSchema.statics.findByCode = async function(aCode) {
+    return this.findOne({code: aCode})
+};
+
+bicicletaSchema.statics.findByIdAndUpdate = async function(id, newData) {
+    try {
+        const bicicleta = await this.findOneAndUpdate({ _id: id }, newData, { new: true, runValidators: true });
+        if (!bicicleta) {
+            return { success: false, message: 'Bicicleta no encontrada' };
+        }
+        return { success: true, data: bicicleta };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
+
+bicicletaSchema.statics.removeByCode = async function(id) {
+    try { 
+        await this.deleteOne({ _id: id});
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
 };
 
 

@@ -1,31 +1,33 @@
 extends ../layout
 
 block content
-    a(href='bicicletas/create') Nueva Bicicleta
-
-    table.table
-        thead
-            tr
-                th(scope='col') #
-                th(scope='col') Color
-                th(scope='col') Modelo
-                th(scope='col') Ubicacion
-                th(scope='col') 
-                th(scope='col')
+    .container
+        .row.mb-3
+            .col
+                a.btn.btn-primary.mr-2(href='bicicletas/create') Nueva Bicicleta
+                a.btn.btn-secondary(href='/') Volver
+        table.table.table-striped
+            thead
+                tr
+                    th(scope='col') #
+                    th(scope='col') Color
+                    th(scope='col') Modelo
+                    th(scope='col') Ubicacion
+                    th(scope='col') 
+                    th(scope='col')
             tbody
                 each bici in bicis 
                     tr
                         th(scope='row')
-                          = bici.id
+                          = bici.code
                         td= bici.color
                         td= bici.modelo 
                         td= bici.ubicacion
                         td
-                            a(href = 'bicicletas/' + bici.id + '/show') Ver
+                            a.btn.btn-info(href = 'bicicletas/' + bici.id + '/show') Ver
                         td
-                            a(href = 'bicicletas/' + bici.id + '/update') Editar
+                            a.btn.btn-warning(href = 'bicicletas/' + bici.id + '/update') Editar
                         td 
-                            form.inline(method='post' action="bicicletas/" + bici.id + '/delete')
-                                input(type="hidden" name='id' values= bici.id)
-                                button.link-button(type='submit' name='submit_param' value='submit_value' class='btn')
-                                    = 'Eliminar'
+                            form.d-inline(method='post' action="bicicletas/" + bici.id + '/delete')
+                                input(type="hidden" name='id' value= bici.id)
+                                button.btn.btn-danger(type='submit' name='submit_param' value='submit_value') Eliminar

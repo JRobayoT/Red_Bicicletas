@@ -20,8 +20,9 @@ fetch("api/bicicletas")
     .then(promise => promise.json())
     .then(data => {
         console.log(data)
-        for (const key of data.bicicletas) {
-            console.log(key)
+        for (const key of data) {
+            console.log(key.ubicacion)
+            
             L.marker(key.ubicacion, {title:key.id}).addTo(map);
         }
     })
