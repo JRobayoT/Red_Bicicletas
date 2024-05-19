@@ -1,30 +1,28 @@
 extends ../layout
 
 block content
-    a(href='/bicicletas') Volver
+    .container
+        a.btn.btn-secondary(href='/bicicletas') Volver
 
-    br
-    br
-    br
+        .my-4
 
-    h1 Datos Bicicleta 
+        h1 Datos Bicicleta
 
-    br
-    br
+        .my-4
 
-    form(action=`/bicicletas/${bici.id}/get` method='get')
-        label(for='id') ID:
-        label#id= bici.id
-        br
-        label(for='color') Color:
-        label#color= bici.color
-        br
-        label(for='modelo') Modelo:
-        label#modelo= bici.modelo
-        br
-        label(for='lat') Latitud:
-        label#lat= bici.ubicacion[0]
-        br
-        label(for='lng') Longitud:
-        label#lng= bici.ubicacion[1]
-        br
+        form
+            .form-group.shadow.p-3.mb-4.bg-white.rounded
+                label(for='Code') Code:
+                p#id.form-control-plaintext= bici.code
+            .form-group.shadow.p-3.mb-4.bg-white.rounded
+                label(for='color') Color:
+                p#color.form-control-plaintext= bici.color
+            .form-group.shadow.p-3.mb-4.bg-white.rounded
+                label(for='modelo') Modelo:
+                p#modelo.form-control-plaintext= bici.modelo
+            .form-group.shadow.p-3.mb-4.bg-white.rounded
+                label(for='lat') Latitud:
+                p#lat.form-control-plaintext= bici.ubicacion[0]
+            .form-group.shadow.p-3.mb-4.bg-white.rounded
+                label(for='lng') Longitud:
+                p#lng.form-control-plaintext= bici.ubicacion[1]
